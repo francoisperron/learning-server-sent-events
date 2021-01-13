@@ -1,0 +1,37 @@
+<html lang='en' xmlns='http://www.w3.org/1999/html'>
+<head>
+    <title>hello SSE html</title>
+    <script>
+      const source = new EventSource('/api/data')
+
+      source.onmessage = event => {
+        const data = JSON.parse(event.data)
+
+        const valueEl = document.getElementById('value')
+        valueEl.innerText = data.value
+
+        const updatedAtEl = document.getElementById('updatedAt')
+        updatedAtEl.innerText = data.updatedAt
+      }
+
+      const sendNumber = () => {
+        const data = { value: document.getElementById('new-value').value }
+        fetch('/api/data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        .then(() => document.getElementById('new-value').value = '')
+      }
+    </script>
+</head>
+<body>
+<div>
+    Data <span id='value'></span> - <span id='updatedAt'></span>
+    <br>
+    <input id='new-value'/>
+    <button onclick='sendNumber()'>Change data</button>
+</div>
+
+</body>
+</html>
