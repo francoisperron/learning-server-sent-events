@@ -13,3 +13,7 @@ Reconnection won't work when using nginx as a reverse proxy.
 #### To run with react
     cd web && npm i && npm start
     Open browsers on http://localhost:3000
+
+#### To run with a reverse-proxy
+    cd env && docker-compose up --build -d
+    Open browsers on http://localhost:3001 or 3000
