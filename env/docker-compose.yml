@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: ../web
+    container_name: web
+    restart: unless-stopped
+    depends_on:
+      - api
+  api:
+    build:
+      context: ../api
+    container_name: api
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+  proxy:
+    image: nginx:alpine
+    container_name: proxy
+    restart: unless-stopped
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 3000:3000
+    depends_on:
+      - web

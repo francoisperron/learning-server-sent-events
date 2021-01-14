@@ -15,8 +15,8 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')))
 
 app.get('/api/data', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream')
-  res.setHeader('Cache-Control', 'no-cache')
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Cache-Control', 'no-transform') // no-cache does not work with CRA http-proxy-middleware
+  res.setHeader('Connection', 'keep-alive')
   res.flushHeaders()
 
   const id = Date.now()

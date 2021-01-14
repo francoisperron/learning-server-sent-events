@@ -1,5 +1,8 @@
 ### Learning server-sent events
 
+Works very well without a proxy. 
+Reconnection won't work when using nginx as a reverse proxy.
+
 #### Dependencies
     node 14
 

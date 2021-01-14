@@ -6,15 +6,25 @@ const useEventSource = (url) => {
   const [data, updateData] = useState(null)
 
   useEffect(() => {
+    connectToServer(url)
+  }, [url])
+
+  const connectToServer = (url) => {
     const source = new EventSource(url)
     source.onmessage = event => updateData(JSON.parse(event.data))
-  }, [url])
+    source.onerror = error => {
+      console.log('error', error)
+      source.close()
+      setTimeout(() => connectToServer(url), 4000)  // cant get nginx to reconnect after it sends a BAD GATEWAY after 30s
+    }
+  }
 
   return data
 }
 
 const App = () => {
-  const data = useEventSource('http://localhost:3001/api/data') // does not work with CRA proxy and /api/data
+  const data = useEventSource('/api/data')
+
   const [input, setInput] = useState('')
 
   const sendData = () => {

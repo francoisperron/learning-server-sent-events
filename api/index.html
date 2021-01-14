@@ -1,6 +1,6 @@
 <html lang='en' xmlns='http://www.w3.org/1999/html'>
 <head>
-    <title>hello SSE html</title>
+    <title>SSE - html</title>
     <script>
       const source = new EventSource('/api/data')
 
@@ -12,6 +12,10 @@
 
         const updatedAtEl = document.getElementById('updatedAt')
         updatedAtEl.innerText = data.updatedAt
+      }
+
+      source.onerror = error => {
+        console.log('error', error)
       }
 
       const sendNumber = () => {
